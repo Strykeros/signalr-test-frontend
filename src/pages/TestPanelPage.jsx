@@ -40,7 +40,7 @@ const TestPanelPage = () => {
       const status = await authService.getAuthStatus();
       setIsAuthenticated(status.isAuthenticated);
       setUser(status.user);
-      
+
       if (!status.isAuthenticated) {
         navigate('/login');
       }
@@ -52,47 +52,43 @@ const TestPanelPage = () => {
   };
 
 
-const handleSendTest = async () => {
-  if (!userId.trim()) {
-    setResponse('Error: UserId is required');
-    return;
-  }
-
-  setIsLoading(true);
-  try {
-    const testData = {
-      success: true,
-      userId,
-      timestamp: new Date().toISOString(),
-      message: 'Test completed successfully',
-      sessionId: Math.random().toString(36).substr(2, 9),
-      connectionInfo: {
-        status: 'Connected',
-        hub: 'SignalR Hub',
-        transport: 'WebSockets',
-        signalRUserId: signalRUserId
-      }
-    };
-
-    if (connection && isConnected) {
-      await connection.invoke('SendMessage', userId, JSON.stringify(testData));
-      // or, if you’re paired and don’t want to specify a user:
-      // await connection.invoke('SendToPartner', JSON.stringify(testData));
+  const handleSendTest = async () => {
+    if (!userId.trim()) {
+      setResponse('Error: UserId is required');
+      return;
     }
 
+    setIsLoading(true);
+    try {
+      const testData = {
+        success: true,
+        userId,
+        timestamp: new Date().toISOString(),
+        message: 'Test completed successfully',
+        sessionId: Math.random().toString(36).substr(2, 9),
+        connectionInfo: {
+          status: 'Connected',
+          hub: 'SignalR Hub',
+          transport: 'WebSockets',
+          signalRUserId: signalRUserId
+        }
+      };
 
-    // (optional) also log locally in this page
-    addMessage('Test Sent', testData);
+      if (connection && isConnected) {
+        await connection.invoke('SendMessage', userId, JSON.stringify(testData));
+      }
 
-    await new Promise(r => setTimeout(r, 800));
-    setResponse(JSON.stringify(testData, null, 2));
-  } catch (error) {
-    setResponse(`Error: ${error.message}`);
-    addMessage('Test Error', { error: error.message });
-  } finally {
-    setIsLoading(false);
-  }
-};
+      addMessage('Test Sent', testData);
+
+      await new Promise(r => setTimeout(r, 800));
+      setResponse(JSON.stringify(testData, null, 2));
+    } catch (error) {
+      setResponse(`Error: ${error.message}`);
+      addMessage('Test Error', { error: error.message });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -118,46 +114,55 @@ const handleSendTest = async () => {
   }
 
   if (!isAuthenticated) {
-       navigate('/login');
+    navigate('/login');
   }
 
   return (
     <div className="max-w-6xl mx-auto mt-8 p-5 space-y-6">
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
-        <div className="flex justify-between items-center mb-4">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5 w-auto">
+        <div className="flex justify-center items-center mb-4 flex-col lg:flex-row">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">TestPanel API Tester</h1>
             {user && (
-              <p className="text-sm text-gray-600 mt-1">Welcome, {user.name}</p>
+              <p className="text-md text-gray-600 mt-1">Welcome, {user.name}</p>
             )}
           </div>
           <button
             onClick={handleLogout}
-            className="px-3 py-1 text-blue-600 hover:text-blue-800 underline text-sm"
+            type='button'
+            className="lg:ml-7 px-3 py-1 text-white bg-red-600 text-md rounded-lg"
           >
             Log out
           </button>
         </div>
 
-        <div className="flex items-center gap-4 text-sm">
-          <span className="text-gray-600">SignalR Status:</span>
-          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-            isConnected ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-          }`}>
-            {connectionStatus}
-          </span>
-          {signalRUserId && (
-            <span className="text-gray-600">
-              User ID: <code className="bg-gray-100 px-1 rounded text-xs">{signalRUserId}</code>
+        <div className="flex items-center justify-center gap-1 text-md flex-col lg:flex-row">
+          <div className="flex flex-col lg:flex-row">
+            <span className="text-gray-600 lg:mr-5">SignalR Status:</span>
+            <span className={`lg:mr-5 px-2 py-1 rounded-full text-sm font-medium ${isConnected ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+              }`}>
+              {connectionStatus}
             </span>
+          </div>
+
+          {signalRUserId && (
+            <div className="flex flex-col lg:flex-row">
+              <span className="text-gray-600 lg:mr-5">
+                User ID:
+              </span>
+              <span>
+                <code className="text-black px-1 rounded text-sm">{signalRUserId}</code>
+              </span>
+            </div>
+
           )}
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Test Controls</h2>
-          
+      <div className="flex justify-center">
+        <div className="w-full max-w-md bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4 text-center">Test Controls</h2>
+
           <div className="space-y-4">
             <div>
               <label htmlFor="userId" className="block font-semibold text-gray-700 mb-2">
@@ -171,7 +176,7 @@ const handleSendTest = async () => {
                 onChange={(e) => setUserId(e.target.value)}
                 placeholder="e.g. authenticated user's NameIdentifier"
                 required
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-black"
               />
               <small className="text-gray-500 text-sm block mt-1">
                 Click "Send Test" to send test data via SignalR
@@ -182,18 +187,13 @@ const handleSendTest = async () => {
               type="button"
               onClick={handleSendTest}
               disabled={isLoading || !userId.trim()}
-              className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white rounded-lg cursor-pointer disabled:cursor-not-allowed transition-colors"
+              className="w-full px-4 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
             >
               {isLoading ? 'Sending...' : 'Send Test'}
             </button>
           </div>
 
-          <div className="mt-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-3">Response</h3>
-            <pre className="bg-gray-900 text-gray-200 p-4 rounded-lg overflow-auto text-sm font-mono min-h-[100px] whitespace-pre-wrap">
-              {response}
-            </pre>
-          </div>
+
         </div>
 
 

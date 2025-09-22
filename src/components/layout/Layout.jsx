@@ -7,16 +7,13 @@ const Layout = ({ children, title = "SignalRTest" }) => {
 
   return (
     <div className="min-h-screen flex flex-col">
-
-        <Header/>
-
-      <div className="min-w-100 justify-center px-4 flex-grow">
-        <main role="main" className="pb-3">
+      <Header/>
+      <div className="flex-grow bg-white">
+        <main role="main" className="h-full">
           {children}
         </main>
       </div>
-
-        <Footer/>
+      <Footer/>
     </div>
   );
 };

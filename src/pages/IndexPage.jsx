@@ -23,22 +23,19 @@ const IndexPage = () => {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-      {/* Divider */}
+
       <div className="py-2 sm:py-4">
         <hr className="border-gray-300" />
       </div>
       
-      {/* Main Grid - Stack on mobile, side by side on larger screens */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6 py-2 sm:py-4">
         
-        {/* Messages Panel - Takes full width on mobile, 3 columns on large screens */}
         <div className="lg:col-span-3 order-2 lg:order-1">
           <div className="bg-white rounded-lg sm:rounded-xl shadow-sm border border-gray-200 p-3 sm:p-5">
             <h2 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">
               SignalR Messages ({messages.length})
             </h2>
-            
-            {/* Messages Container - Responsive height */}
+
             <div className="h-64 sm:h-80 lg:h-96 overflow-y-auto space-y-2">
               {messages.length === 0 ? (
                 <div className="text-gray-500 text-center py-8 text-sm sm:text-base">
@@ -60,7 +57,6 @@ const IndexPage = () => {
           </div>
         </div>
 
-        {/* Status Panel - Full width on mobile, 1 column on large screens */}
         <div className="lg:col-span-1 order-1 lg:order-2">
           <div className="bg-white rounded-lg sm:rounded-xl shadow-sm border border-gray-200 p-3 sm:p-5">
             <h5 className="text-base sm:text-lg font-semibold text-gray-900 mb-3">
@@ -68,16 +64,14 @@ const IndexPage = () => {
             </h5>
             
             <div className="space-y-3">
-              {/* Connection Status */}
               <div className={`text-sm ${getStatusTextColor()}`}>
                 {connectionStatus}
               </div>
               
-              {/* User Info */}
               {userInfo && (
                 <div className="pt-2 border-t border-gray-200">
 
-                  <div className="font-mono text-xs bg-gray-100 px-2 py-1 rounded break-all">
+                  <div className="font-mono text-black text-xs px-2 py-1 rounded break-all">
                     {userInfo}
                   </div>
                 </div>

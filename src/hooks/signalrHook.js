@@ -161,7 +161,7 @@ export const useSignalR = (hubUrl = '/chathub') => {
   try {
     // invoke a server method that will broadcast to clients
     await connection.invoke("BroadcastTest", payload);
-    // optional: also log locally that we initiated the send
+
     addMessage("Test Sent", payload);
   } catch (err) {
     addMessage("Send Error", { error: err.message });

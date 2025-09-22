@@ -78,7 +78,7 @@ const LoginPage = ({ onLoginSuccess }) => {
 
 
   return (
-    <div className="min-h-screen min-w-100 flex items-center justify-center py-4 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen w-full flex items-center justify-center lg:px-8">
       <div className="max-w-sm sm:max-w-md w-full space-y-6">
         <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 space-y-6">
         <div className="text-center">
@@ -93,7 +93,7 @@ const LoginPage = ({ onLoginSuccess }) => {
                 name="userNameOrEmail"
                 value={formData.userNameOrEmail}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-black"
                 placeholder="Enter your email or username"
                 required
               />
@@ -108,7 +108,7 @@ const LoginPage = ({ onLoginSuccess }) => {
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                className="w-full px-3 py-2 border border-gray-300 text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                 placeholder="Enter your password"
                 required
               />
@@ -134,7 +134,7 @@ const LoginPage = ({ onLoginSuccess }) => {
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400 disabled:cursor-not-allowed transition-colors"
+              className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-black bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400 disabled:cursor-not-allowed transition-colors"
             >
               {loading ? (
                 <div className="flex items-center">
